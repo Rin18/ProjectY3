@@ -1,6 +1,10 @@
 # ProjectY3
 GitHub Repository for 3rd Year Project
 
-training data is stored in /data file
+## Dataset
+The dataset for this project can be found in the /data directory.
 
-results are stored in /results file
+The dataset has been built by selected various pieces by Baroque composers from the V3.0.0 [Maestro Dataset](https://magenta.tensorflow.org/datasets/maestro). 
+
+## Results
+results are stored in /results directory
