@@ -18,17 +18,20 @@ print("note_to_int: \n", note_to_int)
 #int_to_note = dict((number, note_) for number, note_ in enumerate(unique_notes)) 
 #predicted_notes = [int_to_note[i] for i in predictions]
 
-#Generate random notes
-def generate_notes(pitchnames, n_vocab):
-    int_to_note = dict((number, note) for number, note in enumerate(pitchnames))
-    predicted_notes = []
+# READING AND WRITING WITH PICKLE
+import pickle
+fruits = ['apple','banana','pear']
+#For writing:
+with open('Fruits.obj', 'wb') as fp:
+    pickle.dump(fruits, fp)
 
-    for note_index in range(100):
-        index = random.randrange(0, n_vocab-1, 1)
-        result = int_to_note[index]
-        predicted_notes.append(result)
+#For reading:
+with open('Fruits.obj', 'rb') as fp:
+    fruits = pickle.load(fp)
 
-    return predicted_notes
+#Example for my case
+notes_array = parse_midi("data/maestro_baroque/Purcell.mid")
+with open('data/notes_parsed/notes', 'rb') as fp:
+    parsed_notes = pickle.load(fp)
+print("Notes read with function: \n", notes_array)
 
-predicted_notes = generate_notes(unique_notes, n_notes)
-print("Predicted notes: \n", predicted_notes)

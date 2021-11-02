@@ -1,39 +1,44 @@
 #This file contains various functions with recurrent use
 
 from music21 import *
-import numpy as np
+import pickle
+import glob
 
 # PARSE_MIDI
-# Function to parse through midi files
-def parse_midi(file):
-    print("Working on: ",file)
+# Function to parse through midi files in given path
+def parse_midi(path):
     notes = []
     # Choose whether or not to have rests in the data
     rest = False
-    notes_in_file = None
-    midi = converter.parse(file)
+    for file in glob.glob(path + "/*.mid"):
+        print("Working on: ",file)
+        notes_in_file = None
+        midi = converter.parse(file)
 
-    # Partition instruments
-    instruments = instrument.partitionByInstrument(midi)
+        # Partition instruments
+        instruments = instrument.partitionByInstrument(midi)
 
-    for part in  instruments.parts:
-        # Currently only piano
-        if 'Piano' in str(part):
-            notes_in_file = part.recurse()
-            for element in notes_in_file:
-                # Note
-                if isinstance(element, note.Note):
-                    notes.append(str(element.pitch))
-                # Chord
-                elif isinstance(element, chord.Chord):
-                    notes.append('.'.join(str(n) for n in element.normalOrder))
-                # Rest
-                elif isinstance(element, note.Rest) and rest:
-                    notes.append("rest")
+        for part in  instruments.parts:
+            # Currently only piano
+            if 'Piano' in str(part):
+                notes_in_file = part.recurse()
+                for element in notes_in_file:
+                    # Note
+                    if isinstance(element, note.Note):
+                        notes.append(str(element.pitch))
+                    # Chord
+                    elif isinstance(element, chord.Chord):
+                        notes.append('.'.join(str(n) for n in element.normalOrder))
+                    # Rest
+                    elif isinstance(element, note.Rest) and rest:
+                        notes.append("rest")
     
+    # Create a file containing the notes parsed
+    with open('data/notes_parsed/notes', 'wb') as fp:
+        pickle.dump(notes, fp)
+
     # Return array with notes
-    return np.array(notes)
-    #return notes
+    return notes
 
 # ADD_SEMITONES
 # Increase notes in note_array by nr_semitones

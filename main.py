@@ -2,9 +2,9 @@
 
 from parse_midi import *
 
-#Parse notes in one midi file
-#notes = parse_midi("data/for_elise_by_beethoven.mid")
-notes = parse_midi("data/maestro_baroque/Purcell.mid")
+#Parse notes in dataset of midi files
+path = 'data/test_dataset/'
+notes = parse_midi(path)
 #print("Result: \n", result)
 
 # Incease notes by a tone and add them to array
@@ -12,4 +12,4 @@ increased_notes = add_semitones(notes, 2)
 #print("Increased notes: \n", increased_notes)
 
 #output_midi(increased_notes, "fur_elise")
-output_midi(increased_notes, "Purcell")
+output_midi(increased_notes, "test_new_parse_function")
