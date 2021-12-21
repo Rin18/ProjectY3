@@ -15,23 +15,24 @@ def parse_midi(path):
         notes_in_file = None
         midi = converter.parse(file)
 
-        # Partition instruments
-        instruments = instrument.partitionByInstrument(midi)
+        try: 
+            # Partition instruments
+            instruments = instrument.partitionByInstrument(midi)
+            print("Number of instrument parts: " + str(len(instruments.parts)))
+            notes_to_parse = instruments.parts[0].recurse()
+        except: 
+            notes_to_parse = midi.flat.notes
 
-        for part in  instruments.parts:
-            # Currently only piano
-            if 'Piano' in str(part):
-                notes_in_file = part.recurse()
-                for element in notes_in_file:
-                    # Note
-                    if isinstance(element, note.Note):
-                        notes.append(str(element.pitch))
-                    # Chord
-                    elif isinstance(element, chord.Chord):
-                        notes.append('.'.join(str(n) for n in element.normalOrder))
-                    # Rest
-                    elif isinstance(element, note.Rest) and rest:
-                        notes.append("rest")
+        for element in notes_to_parse:
+            # Note
+            if isinstance(element, note.Note):
+                notes.append(str(element.pitch))
+            # Chord
+            elif isinstance(element, chord.Chord):
+                notes.append('.'.join(str(n) for n in element.normalOrder))
+            # Rest
+            elif isinstance(element, note.Rest) and rest:
+                notes.append("rest")
     
     # Create a file containing the notes parsed
     with open('data/notes_parsed/notes', 'wb') as fp:
@@ -67,7 +68,6 @@ def add_semitones(note_array, nr_semitones):
 
 # OUTPUT_MIDI
 # Create midi file of given predicted notes array
-# No predictions currently, but useful for when model is built
 def output_midi(prediction_output, file_name):
     print("Converting to MIDI")
     offset = 0
