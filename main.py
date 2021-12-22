@@ -1,8 +1,7 @@
-#Initial main file to test things
+# Initial main file to test things
+from functions import *
 
-from parse_midi import *
-
-#Parse notes in dataset of midi files
+# Parse notes in dataset of midi files
 path = 'data/test_dataset/'
 notes = parse_midi(path)
 #print("Result: \n", result)

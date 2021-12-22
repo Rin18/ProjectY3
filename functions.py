@@ -18,7 +18,6 @@ def parse_midi(path):
         try: 
             # Partition instruments
             instruments = instrument.partitionByInstrument(midi)
-            print("Number of instrument parts: " + str(len(instruments.parts)))
             notes_to_parse = instruments.parts[0].recurse()
         except: 
             notes_to_parse = midi.flat.notes
@@ -35,7 +34,7 @@ def parse_midi(path):
                 notes.append("rest")
     
     # Create a file containing the notes parsed
-    with open('data/notes_parsed/notes', 'wb') as fp:
+    with open('data/notes_parsed/notes_', 'wb') as fp:
         pickle.dump(notes, fp)
 
     # Return array with notes

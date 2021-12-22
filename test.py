@@ -1,5 +1,5 @@
 #File for testing various things outside of maine
-from parse_midi import *
+from functions import *
 from music21 import *
 
 dMaj = chord.Chord(['D', 'F#', 'A'])

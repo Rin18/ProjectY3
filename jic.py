@@ -1,7 +1,7 @@
 #Just In Case
 #File for discarded ideas that might be needed later
 import random
-from parse_midi import *
+from functions import *
 
 result = parse_midi("for_elise_by_beethoven.mid")
 #Trying to work out note to int and int to note
