@@ -29,6 +29,8 @@ def get_input(notes, notes_len):
     # Note to integer map
     note_to_int = dict((note, number) for number, note in enumerate(pitchnames))
 
+    # To predict the next note, we take into account the previous 100 notes.
+    # Increase to 250 and see what happens
     sequence_length = 100
     network_input = []
     network_output = []
@@ -47,6 +49,8 @@ def get_input(notes, notes_len):
 
 # CREATE_NETWORK
 # Function for creating the LSTM neural network
+# Contains three LSTM layers, three Dropout layers, 
+# two Dense layers and two activation layers
 def create_network(network_input, notes_len):
     model = Sequential()
     model.add(LSTM(
@@ -75,7 +79,7 @@ def create_network(network_input, notes_len):
 # Function for training the LSTM neural network
 def train_model(model, network_input, network_output):
     # After each epoch, save the weights
-    filepath = "weights-improvement-{epoch:02d}-{loss:.4f}-bigger.hdf5"
+    filepath = "training_models/weights-bach-{epoch:02d}-{loss:.4f}.hdf5"
     checkpoint = ModelCheckpoint(
         filepath,
         monitor='loss',
@@ -83,11 +87,16 @@ def train_model(model, network_input, network_output):
         save_best_only=True,
         mode='min'
     )
+
+    # loading saved model and start training from last checkpoint
+    model.load_weights('weights-bach-05.hdf5')
     callbacks_list = [checkpoint]
-    model.fit(network_input, network_output, epochs=200, batch_size=128, callbacks=callbacks_list)
+    model.fit(network_input, network_output, epochs=20, batch_size=128, callbacks=callbacks_list)
 
 # TODO: Instead of calling those here, import file and call functions in main
 # Train model with already parsed notes
-with open('data/notes_parsed/notes_try_training', 'rb') as filepath:
+note_path = 'data/notes_parsed/notes_bach'
+with open(note_path, 'rb') as filepath:
     notes = pickle.load(filepath)
+print("Using: \n", note_path)
 get_model(notes)

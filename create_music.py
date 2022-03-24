@@ -13,7 +13,7 @@ import numpy
 # Function that generates music
 def generate():
     # Get the notes used in training the model
-    with open('data/notes_parsed/baroque_notes', 'rb') as filepath:
+    with open('data/notes_parsed/notes_classical_test', 'rb') as filepath:
         notes = pickle.load(filepath)
     
     #with open('data/notes_parsed/notes_class', 'rb') as filepath:
@@ -30,7 +30,7 @@ def generate():
     # Prediction output used for generating notes
     prediction_output = predicted_notes(model, network_input, pitchnames, notes_len)
     # Convert prediction output to a midi file
-    output_midi(prediction_output, "test_function_generation")
+    output_midi(prediction_output, "test_classical")
 
 # GET_INPUT
 # Function that given parsed notes as argument, shapes them as input for model
@@ -38,6 +38,7 @@ def get_input(notes, pitchnames, notes_len):
     # Note to integer map
     note_to_int = dict((note, number) for number, note in enumerate(pitchnames))
     sequence_length = 100
+    # sequence_length = 250
     network_input = []
     
     for i in range(0, len(notes) - sequence_length, 1):
@@ -71,17 +72,18 @@ def create_network(network_input, notes_len):
     model.add(Dropout(0.3))
     model.add(Dense(notes_len))
     model.add(Activation('softmax'))
+    #model.compile(loss='categorical_crossentropy', optimizer='adam')
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 
     # Load the weights to each node
-    model.load_weights('weights-baroque2.hdf5')
-    #model.load_weights('weights_classic.hdf5')
+    #model.load_weights('weights-bach-adam.hdf5')
+    model.load_weights('weights_classical_test.hdf5')
     return model
 
 # PREDICTED_NOTES
 # Function that predicts notes given a trained model
 def predicted_notes(model, network_input, pitchnames, notes_len):
-    # Choose random sequence for prediction using trained model
+    # Choose random sequence used for prediction using trained model
     start = numpy.random.randint(0, len(network_input)-1)
     int_to_note = dict((number, note) for number, note in enumerate(pitchnames))
     pattern = network_input[start]
