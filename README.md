@@ -23,7 +23,7 @@ python3 model.py
 ```
 
 ## Create music
-Use trained model to create music by running create_music.py:
+Use trained model to create music by running main:
 ```
-python3 create_music.py
+python3 main.py
 ```
