@@ -1,7 +1,6 @@
 """ 
 Code was heavily inspired by the following tutorial:
 https://towardsdatascience.com/how-to-generate-music-using-a-lstm-neural-network-in-keras-68786834d4c5
-
 """
 # This file contains the lstm model used to generate music
 
