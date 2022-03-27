@@ -11,7 +11,7 @@ def parse_midi(path):
     # Choose whether or not to have rests in the data
     rest = False
     for file in glob.glob(path + "/*.mid"):
-        print("Working on: ",file)
+        print("Working on: \n",file)
         notes_in_file = None
         midi = converter.parse(file)
 
@@ -68,7 +68,7 @@ def add_semitones(note_array, nr_semitones):
 # OUTPUT_MIDI
 # Create midi file of given predicted notes array
 def output_midi(prediction_output, file_name):
-    print("Converting to MIDI")
+    print("Converting to MIDI \n")
     offset = 0
     output_notes = []
 
