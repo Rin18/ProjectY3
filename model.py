@@ -1,3 +1,8 @@
+""" 
+Code was heavily inspired by the following tutorial:
+https://towardsdatascience.com/how-to-generate-music-using-a-lstm-neural-network-in-keras-68786834d4c5
+
+"""
 # This file contains the lstm model used to generate music
 
 from functions import *
@@ -11,6 +16,8 @@ from keras.models import Sequential
 from keras.utils import np_utils
 import numpy
 
+# GET_MODEL
+# Function that, given parsed notes as argument, trains the model
 def get_model(notes):
     # Length of notes set
     notes_len = len(set(notes))
@@ -22,7 +29,7 @@ def get_model(notes):
     train_model(model, network_input, network_output)
 
 # GET_INPUT
-# Function that given parsed notes as argument, shapes them as input and output for model
+# Function that, given parsed notes as argument, shapes them as input and output for model
 def get_input(notes, notes_len):
     # Pitch names from notes set
     pitchnames = sorted(set(item for item in notes))

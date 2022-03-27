@@ -1,4 +1,4 @@
-#This file contains various functions with recurrent use
+# This file contains various functions with recurrent use
 
 from music21 import *
 import pickle

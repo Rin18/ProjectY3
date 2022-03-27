@@ -1,5 +1,6 @@
 # Initial main file to test things
 from functions import *
+from create_music import *
 
 # Parse notes in dataset of midi files
 path = 'data/test_dataset/'
@@ -12,3 +13,5 @@ increased_notes = add_semitones(notes, 2)
 
 #output_midi(increased_notes, "fur_elise")
 output_midi(increased_notes, "test_new_parse_function")
+
+generate()

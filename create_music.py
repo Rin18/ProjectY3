@@ -1,3 +1,8 @@
+""" 
+Code was heavily inspired by the following tutorial:
+https://towardsdatascience.com/how-to-generate-music-using-a-lstm-neural-network-in-keras-68786834d4c5
+
+"""
 # This file generates music using a trained model
 
 from functions import *
@@ -13,7 +18,8 @@ import numpy
 # Function that generates music
 def generate():
     # Get the notes used in training the model
-    with open('data/notes_parsed/notes_classical_test', 'rb') as filepath:
+    #with open('data/notes_parsed/notes_classical_test', 'rb') as filepath:
+    with open('data/notes_parsed/notes_bach', 'rb') as filepath:
         notes = pickle.load(filepath)
     
     #with open('data/notes_parsed/notes_class', 'rb') as filepath:
@@ -30,7 +36,7 @@ def generate():
     # Prediction output used for generating notes
     prediction_output = predicted_notes(model, network_input, pitchnames, notes_len)
     # Convert prediction output to a midi file
-    output_midi(prediction_output, "test_classical")
+    output_midi(prediction_output, "generate_bach")
 
 # GET_INPUT
 # Function that given parsed notes as argument, shapes them as input for model
@@ -76,8 +82,8 @@ def create_network(network_input, notes_len):
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 
     # Load the weights to each node
-    #model.load_weights('weights-bach-adam.hdf5')
-    model.load_weights('weights_classical_test.hdf5')
+    #model.load_weights('weights_classical_test.hdf5')
+    model.load_weights('weights-bach-05.hdf5')
     return model
 
 # PREDICTED_NOTES
@@ -103,7 +109,3 @@ def predicted_notes(model, network_input, pitchnames, notes_len):
         pattern = pattern[1:len(pattern)]
 
     return prediction_output
-
-# TODO: Instead of calling those here, import file and call functions in main
-# Use the generate function to get an ML generated music file as output
-generate()
