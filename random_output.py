@@ -7,8 +7,7 @@ import random
 # GENERATE_RANDOM
 # Function that generates midi file compiled of random notes 
 def generate_random():
-    # load the notes used to train the model
-    print("Loading the notes used to train the model")
+    # load the notes used to train the modelSS
     with open('data/notes_parsed/notes_bach', 'rb') as filepath:
         notes = pickle.load(filepath)
 
